@@ -1,5 +1,5 @@
 // src/components/Sidebar.tsx
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 const Sidebar = ({
   onFilterChange,
@@ -9,13 +9,16 @@ const Sidebar = ({
   const [brand, setBrand] = useState("");
   const [status, setStatus] = useState("");
 
-  const handleSubmit = () => {
-    const filters = {
+  // Memorizar el objeto filters solo cuando brand o status cambian
+  const filters = useMemo(() => {
+    return {
       brand,
       status: status.split(",").map((s) => s.trim()),
     };
-    React;
-    onFilterChange(filters);
+  }, [brand, status]); // Dependencias: solo recalcular cuando brand o status cambian
+
+  const handleSubmit = () => {
+    onFilterChange(filters); // Pasar el filtro memorizado
   };
 
   return (

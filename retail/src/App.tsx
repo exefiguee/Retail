@@ -4,16 +4,28 @@ import { fetchProducts } from "./services/api";
 import Sidebar from "./components/Sidebar";
 import "./App.css";
 
+interface Product {
+  id: string;
+  name: string;
+  brand: string;
+  status: "AVAILABLE" | "OUT_OF_STOCK";
+  prices: {
+    normalPrice: number;
+    offerPrice?: number;
+    lowest?: number;
+  };
+}
+
 const App = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     brand: "",
     status: "",
-    skus: "",
     page: 0,
     pageSize: 20,
   });
+
   const [paging, setPaging] = useState({
     total: 0,
     pages: 0,
@@ -23,11 +35,10 @@ const App = () => {
   const handleFilterChange = (newFilters: {
     brand: string;
     status: string;
-    skus?: string;
   }) => {
     setFilters({
       ...newFilters,
-      skus: newFilters.skus || "",
+
       page: 0,
       pageSize: filters.pageSize,
     });

@@ -1,9 +1,9 @@
 .app {
   display: flex;
-  flex-direction: column; /* Organiza los elementos en una columna */
+  flex-direction: column; 
   padding: 20px;
-  color: black; /* Todo el texto es negro */
-  height: 100vh; /* Asegura que el contenedor ocupe toda la pantalla */
+  color: black; 
+  height: 100vh; 
 }
 
 .title {

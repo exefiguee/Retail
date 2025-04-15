@@ -1,7 +1,7 @@
 // src/services/api.ts
 
 const API_URL = import.meta.env.VITE_API_URL || "https://services.retailcompass.com/api/pricing/v1/products";
-const API_KEY = import.meta.env.VITE_API_KEY || ""; // Usa la variable de entorno o un valor por defecto
+const API_KEY = import.meta.env.VITE_API_KEY || "";
 
 interface Filters {
   brand: string;
@@ -11,36 +11,34 @@ interface Filters {
 }
 
 interface Paging {
-  total: number; // Total de productos
-  pages: number; // Total de páginas
-  size: number; // Tamaño de la página
+  total: number; 
+  pages: number; 
+  size: number; 
 }
 
 interface ProductResponse {
   paging: Paging;
-  products: Array<any>; // O ajusta el tipo de acuerdo con la estructura real de tus productos
+  products: Array<any>; 
 }
 
 export const fetchProducts = async (filters: Filters): Promise<ProductResponse> => {
   const { brand, status, page, pageSize } = filters;
   const params = new URLSearchParams();
 
-  // Añadir los parámetros de filtro si están disponibles
   if (brand) params.append('brand', brand);
   if (status) params.append('status', status);
-  if (page !== undefined) params.append('page', page.toString());  // Paginación
-  if (pageSize !== undefined) params.append('size', pageSize.toString());  // Tamaño de la página
+  if (page !== undefined) params.append('page', page.toString()); 
+  if (pageSize !== undefined) params.append('size', pageSize.toString()); 
   
-  // Agregar el API key a los parámetros de la URL
+ 
   if (API_KEY) params.append('apikey', API_KEY);
 
   try {
-    // Hacer la solicitud con los parámetros de la URL
+
     const response = await fetch(`${API_URL}?${params.toString()}`, {
       method: 'GET',
     });
 
-    // Verificar si la respuesta es exitosa
     if (!response.ok) {
       throw new Error('Error fetching products');
     }

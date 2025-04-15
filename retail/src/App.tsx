@@ -10,9 +10,9 @@ const App = () => {
   const [filters, setFilters] = useState({
     brand: "",
     status: "",
-    skus: "", // Campo para los SKUs (si es necesario)
-    page: 0, // Página inicial
-    pageSize: 20, // Tamaño de la página (20 por defecto)
+    skus: "",
+    page: 0,
+    pageSize: 20,
   });
   const [paging, setPaging] = useState({
     total: 0,
@@ -20,7 +20,6 @@ const App = () => {
     size: 0,
   });
 
-  // Función que se llama cuando el Sidebar envía los filtros
   const handleFilterChange = (newFilters: {
     brand: string;
     status: string;
@@ -28,28 +27,26 @@ const App = () => {
   }) => {
     setFilters({
       ...newFilters,
-      skus: newFilters.skus || "", // Asegurarse de que skus sea una cadena vacía si no se proporciona
-      page: 0, // Resetear la página cuando se cambian los filtros
+      skus: newFilters.skus || "",
+      page: 0,
       pageSize: filters.pageSize,
     });
   };
 
-  // Llamada a la API para obtener productos con filtros y paginación
   useEffect(() => {
     const getProducts = async () => {
       try {
         const data = await fetchProducts(filters);
-        setProducts(data.products); // Setea los productos en el estado
-        setPaging(data.paging); // Setea la paginación en el estado
+        setProducts(data.products);
+        setPaging(data.paging);
       } catch (err: any) {
         setError("Failed to fetch products: " + err.message);
       }
     };
 
-    getProducts(); // Llama a la API con los filtros actuales
-  }, [filters]); // Vuelve a llamar cuando los filtros cambian
+    getProducts();
+  }, [filters]);
 
-  // Funciones de paginación
   const goToNextPage = () => {
     if (filters.page < paging.pages - 1) {
       setFilters({ ...filters, page: filters.page + 1 });

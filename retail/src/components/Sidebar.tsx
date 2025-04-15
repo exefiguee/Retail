@@ -8,15 +8,15 @@ const Sidebar = ({
 }) => {
   const [brand, setBrand] = useState("");
   const [status, setStatus] = useState("");
-  const [skus, setSkus] = useState("");
 
   const handleSubmit = () => {
     const filters = {
       brand,
-      status: status.split(",").map((s) => s.trim()), // Convertir a array de status
-      skus: skus.split(",").map((sku) => sku.trim()), // Convertir a array de SKUs
+      status: status.split(",").map((s) => s.trim()),
     };
-    onFilterChange(filters); // Enviar los filtros actualizados
+
+    React;
+    onFilterChange(filters);
   };
 
   return (

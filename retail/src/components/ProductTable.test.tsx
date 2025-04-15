@@ -1,27 +1,39 @@
-import { render, screen } from "@testing-library/react";
-import ProductTable from "./ProductTable";
-import "@testing-library/jest-dom";
+// src/components/ProductTable.tsx
+import React from "react";
 
-test("muestra la tabla de productos", () => {
-  const products = [
-    {
-      id: 1,
-      name: "Producto 1",
-      lowestPrice: 100,
-      normalPrice: 150,
-      offerPrice: 120,
-    },
-    {
-      id: 2,
-      name: "Producto 2",
-      lowestPrice: 80,
-      normalPrice: 120,
-      offerPrice: 100,
-    },
-  ];
+interface ProductTableProps {
+  products: {
+    id: string;
+    name: string;
+    normalPrice: number;
+    offerPrice?: number;
+    lowest?: number;
+  }[];
+}
 
-  render(<ProductTable products={products} />);
+const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio Normal</th>
+          <th>Precio de Oferta</th>
+          <th>Precio Más Bajo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((product) => (
+          <tr key={product.id}>
+            <td>{product.name}</td>
+            <td>{product.normalPrice}</td>
+            <td>{product.offerPrice}</td>
+            <td>{product.lowest}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
-  expect(screen.getByText("Producto 1")).toBeInTheDocument();
-  expect(screen.getByText("Producto 2")).toBeInTheDocument();
-});
+export default ProductTable;

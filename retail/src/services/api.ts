@@ -44,7 +44,6 @@ export const fetchProducts = async (filters: Filters): Promise<ProductResponse> 
 
     const data = await response.json();
 
-    // Si la respuesta tiene productos, devolverlos junto con la información de paginación
     if (data && data.products && Array.isArray(data.products)) {
       return {
         products: data.products,
@@ -52,7 +51,7 @@ export const fetchProducts = async (filters: Filters): Promise<ProductResponse> 
       };
     }
 
-    // Si no se encuentran productos, lanzar un error
+  
     throw new Error('No products found in the response');
   } catch (error) {
     console.error("Error fetching products:", error);

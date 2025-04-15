@@ -8,16 +8,14 @@ const Sidebar = ({
   const [brand, setBrand] = useState("");
   const [status, setStatus] = useState("");
 
-  // Memorizar el objeto filters solo cuando brand o status cambian
   const filters = useMemo(() => {
     return {
       brand,
       status: status.split(",").map((s) => s.trim()),
     };
-  }, [brand, status]); // Dependencias: solo recalcular cuando brand o status cambian
-
+  }, [brand, status]);
   const handleSubmit = () => {
-    onFilterChange(filters); // Pasar el filtro memorizado
+    onFilterChange(filters);
   };
 
   return (

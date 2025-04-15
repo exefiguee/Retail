@@ -1,4 +1,3 @@
-// src/components/ProductTable.test.tsx
 import { render, screen } from "@testing-library/react";
 import ProductTable from "./ProductTable";
 import "@testing-library/jest-dom";

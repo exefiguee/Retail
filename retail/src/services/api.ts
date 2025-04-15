@@ -1,4 +1,3 @@
-// src/services/api.ts
 
 const API_URL = import.meta.env.VITE_API_URL || "https://services.retailcompass.com/api/pricing/v1/products";
 const API_KEY = import.meta.env.VITE_API_KEY || "";

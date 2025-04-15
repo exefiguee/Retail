@@ -1,47 +1,48 @@
-// src/components/ProductTable.tsx
 import React from "react";
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
-  lowestPrice: number;
-  normalPrice: number;
-  offerPrice: number;
+  brand: string;
+  status: "AVAILABLE" | "OUT_OF_STOCK";
+  prices: {
+    normalPrice: number;
+    offerPrice?: number;
+    lowest?: number;
+  };
 }
 
-interface ProductTableProps {
+interface Props {
   products: Product[];
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
-  const calculateDiscount = (normal: number, lowest: number) => {
-    return ((normal - lowest) / normal) * 100;
-  };
-
+const ProductTable = ({ products }: Props) => {
   return (
     <table>
       <thead>
         <tr>
-          <th>Producto</th>
+          <th>Nombre</th>
           <th>Precio Normal</th>
-          <th>Precio Oferta</th>
+          <th>Precio de Oferta</th>
           <th>Precio Más Bajo</th>
           <th>Descuento (%)</th>
         </tr>
       </thead>
       <tbody>
-        {products.map((product) => (
-          <tr key={product.id}>
+        {products.map((product, index) => (
+          <tr key={index}>
             <td>{product.name}</td>
-            <td>{product.normalPrice}</td>
-            <td>{product.offerPrice}</td>
-            <td>{product.lowestPrice}</td>
+            <td>{product.prices?.normalPrice}</td>
+            <td>{product.prices?.offerPrice ?? "N/A"}</td>
+            <td>{product.prices?.lowest ?? "N/A"}</td>
             <td>
-              {calculateDiscount(
-                product.normalPrice,
-                product.lowestPrice
-              ).toFixed(2)}
-              %
+              {product.prices?.normalPrice && product.prices?.lowest
+                ? (
+                    ((product.prices.normalPrice - product.prices.lowest) /
+                      product.prices.normalPrice) *
+                    100
+                  ).toFixed(2)
+                : "N/A"}
             </td>
           </tr>
         ))}

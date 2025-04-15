@@ -1,7 +1,8 @@
-// src/App.tsx
 import { useEffect, useState } from "react";
 import { fetchProducts } from "./services/api";
 import Sidebar from "./components/Sidebar";
+import ProductTable from "./components/ProductTable";
+import Pagination from "./components/Pagination";
 import "./App.css";
 
 interface Product {
@@ -38,7 +39,6 @@ const App = () => {
   }) => {
     setFilters({
       ...newFilters,
-
       page: 0,
       pageSize: filters.pageSize,
     });
@@ -77,63 +77,21 @@ const App = () => {
       </div>
 
       <div className="main-content">
-        {/* Sidebar con filtros */}
         <Sidebar onFilterChange={handleFilterChange} />
 
         <div className="content">
           {error && <div className="error">{error}</div>}
+
           {products.length > 0 ? (
             <>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Precio Normal</th>
-                    <th>Precio de Oferta</th>
-                    <th>Precio Más Bajo</th>
-                    <th>Descuento (%)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product, index) => (
-                    <tr key={index}>
-                      <td>{product.name}</td>
-                      <td>{product.prices?.normalPrice}</td>
-                      <td>{product.prices?.offerPrice}</td>
-                      <td>{product.prices?.lowest}</td>
-                      <td>
-                        {product.prices?.normalPrice && product.prices?.lowest
-                          ? (
-                              ((product.prices?.normalPrice -
-                                product.prices?.lowest) /
-                                product.prices?.normalPrice) *
-                              100
-                            ).toFixed(2)
-                          : "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <ProductTable products={products} />
 
-              {/* Paginación */}
-              <div className="pagination">
-                <button
-                  onClick={goToPreviousPage}
-                  disabled={filters.page === 0}
-                >
-                  Anterior
-                </button>
-                <span>
-                  Página {filters.page + 1} de {paging.pages}
-                </span>
-                <button
-                  onClick={goToNextPage}
-                  disabled={filters.page === paging.pages - 1}
-                >
-                  Siguiente
-                </button>
-              </div>
+              <Pagination
+                currentPage={filters.page}
+                totalPages={paging.pages}
+                onPrevious={goToPreviousPage}
+                onNext={goToNextPage}
+              />
             </>
           ) : (
             <div>No products found</div>

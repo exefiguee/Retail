@@ -1,4 +1,3 @@
-// src/components/Sidebar.tsx
 import React, { useState, useMemo } from "react";
 
 const Sidebar = ({

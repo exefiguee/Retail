@@ -14,7 +14,6 @@ const Sidebar = ({
       brand,
       status: status.split(",").map((s) => s.trim()),
     };
-
     React;
     onFilterChange(filters);
   };
